@@ -41,5 +41,11 @@ public class SessionServiceImpl implements SessionService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public SessionDto findSessionByUrl(String sessionUrl) {
+        Session session = sessionRepository.findByUrl(sessionUrl).get();
+        return SessionMapper.mapToSessionDto(session);
+    }
+
 
 }

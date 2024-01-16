@@ -15,6 +15,8 @@ public interface SessionService {
     void createSession(SessionDto sessionDto);
 
     List<SessionDto> findSessionsBetween(LocalDateTime startOfWeek, LocalDateTime endOfWeek);
+
+    SessionDto findSessionByUrl(String sessionUrl);
 }
 
 

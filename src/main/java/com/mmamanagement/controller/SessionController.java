@@ -10,16 +10,14 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class SessionController {
@@ -64,6 +62,17 @@ public class SessionController {
         return "admin/create_session";
     }
 
+    // handler method to handle view post request
+    @GetMapping("/admin/sessions/{sessionUrl}/view")
+    public String viewPost(@PathVariable("sessionUrl") String sessionUrl,
+                           Model model){
+        SessionDto sessionDto = sessionService.findSessionByUrl(sessionUrl);
+        model.addAttribute("session1", sessionDto);
+        return "admin/view_session";
+
+    }
+
+
 
 
 //    // handler method to handle form submit request
@@ -96,14 +105,11 @@ public class SessionController {
     }
 
     private static String getUrl(String sessionName){
-        // OOPS Concepts Explained in Java
-        // oops-concepts-explained-in-java
-        String title = sessionName.trim().toLowerCase();
-        String url = title.replaceAll("\\s+", "-");
-        url = url.replaceAll("[^A-Za-z0-9]", "-");
-        return url;
+        String baseTitle = sessionName.trim().toLowerCase().replaceAll("\\s+", "-")
+                .replaceAll("[^A-Za-z0-9]", "-");
+        String uniqueId = UUID.randomUUID().toString();
+        return baseTitle + "-" + uniqueId;
     }
-
 
 
 }
