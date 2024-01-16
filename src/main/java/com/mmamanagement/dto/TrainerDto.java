@@ -1,5 +1,6 @@
 package com.mmamanagement.dto;
 
+import com.mmamanagement.entity.Session;
 import lombok.Value;
 
 import java.io.Serializable;
@@ -14,4 +15,5 @@ public class TrainerDto {
     String lastName;
     String email;
     String password;
+    Session session;
 }

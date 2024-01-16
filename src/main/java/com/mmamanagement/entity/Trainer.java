@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Set;
+
+
 @Getter
 @Setter
 @Entity
@@ -14,14 +17,18 @@ public class Trainer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String firstName;
+    private String name;
 
-    private String lastName;
+//    private String lastName;
 
     private String email;
 
     private String password;
 
+    // private string description;
+
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "trainer")
+    private Set<Session> session;
 
 
 

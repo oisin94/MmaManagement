@@ -11,6 +11,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class AttendeeDto implements Serializable {
     Long id;
     Long userId;
