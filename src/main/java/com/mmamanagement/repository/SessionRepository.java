@@ -17,5 +17,13 @@ public interface SessionRepository extends JpaRepository<Session, Long> {
     // The string parameter is the string it will match with.
     Optional<Session> findByUrl(String url);
 
+    @Query("SELECT s from Session s WHERE " +
+            " s.sessionName LIKE CONCAT('%', :query, '%') OR " +
+//            " s.beltRank LIKE CONCAT('%', :query, '%') OR " +
+            " s.description LIKE CONCAT('%', :query, '%')")
+    List<Session> searchSessions(String query);
+
     @Query("SELECT s FROM Session s WHERE s.sessionTime BETWEEN :startOfWeek AND :endOfWeek")
-    List<Session> findSessionsBetween(@Param("startOfWeek") LocalDateTime startOfWeek, @Param("endOfWeek") LocalDateTime endOfWeek);}
+    List<Session> findSessionsBetween(@Param("startOfWeek") LocalDateTime startOfWeek,
+                                      @Param("endOfWeek") LocalDateTime endOfWeek);}
+

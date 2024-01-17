@@ -17,6 +17,14 @@ public interface SessionService {
     List<SessionDto> findSessionsBetween(LocalDateTime startOfWeek, LocalDateTime endOfWeek);
 
     SessionDto findSessionByUrl(String sessionUrl);
+
+    void deleteSession(Long sessionId);
+
+    void updateSession(SessionDto sessionDto);
+
+    SessionDto findSessionById(Long sessionId);
+
+    List<SessionDto> searchSessions(String query);
 }
 
 

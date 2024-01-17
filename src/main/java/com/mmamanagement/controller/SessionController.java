@@ -72,22 +72,40 @@ public class SessionController {
 
     }
 
+    @GetMapping("/admin/sessions/{sessionId}/delete")
+public String deletePost(@PathVariable("sessionId") Long sessionId){
+        sessionService.deleteSession(sessionId);
+        return "redirect:/admin/sessions";
+    }
 
+    // handler method to handle edit post request
+    // http://localhost:8080/admin/posts/1/edit
+    @GetMapping("/admin/sessions/{sessionId}/edit")
+    public String editSessionForm(@PathVariable("sessionId") Long sessionId,
+                           Model model){
+        SessionDto sessionDto = sessionService.findSessionById(sessionId);
+        List<Trainer> trainers = trainerService.findAllTrainers();
+        model.addAttribute("session1", sessionDto);
+        model.addAttribute("trainers", trainers);
+        return "admin/edit_session";
+    }
 
+    // handler method to handle edit post form submit request
+    // http://localhost:8080/admin/posts/1
+    @PostMapping("/admin/sessions/{sessionId}")
+    public String updateSession(@PathVariable("sessionId") Long sessionId,
+                             @Valid @ModelAttribute("session1") SessionDto sessionDto,
+                             BindingResult result,
+                             Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("session1", sessionDto);
+            return "admin/edit_session";
+        }
+        sessionDto.setId(sessionId);
+        sessionService.updateSession(sessionDto);
+        return "redirect:/admin/sessions";
+    }
 
-//    // handler method to handle form submit request
-//    @PostMapping("/admin/posts")
-//    public String createPost(@Valid @ModelAttribute("post") PostDto postDto,
-//                             BindingResult result,
-//                             Model model){
-//        if(result.hasErrors()){
-//            model.addAttribute("post", postDto);
-//            return "admin/create_post";
-//        }
-//        postDto.setUrl(getUrl(postDto.getTitle()));
-//        postService.createPost(postDto);
-//        return "redirect:/admin/posts";
-//    }
 
     // handler method to handle form submit request
     // http://localhost:8080/admin/sessions
@@ -104,12 +122,23 @@ public class SessionController {
         return "redirect:/admin/sessions";
     }
 
+    @GetMapping("/admin/sessions/search")
+    public String searchSessions(@RequestParam(value ="query") String query,
+                                 Model model){
+        List<SessionDto> sessions = sessionService.searchSessions(query);
+        model.addAttribute("sessions1", sessions);
+        return "admin/sessions";
+    }
+
+
     private static String getUrl(String sessionName){
         String baseTitle = sessionName.trim().toLowerCase().replaceAll("\\s+", "-")
                 .replaceAll("[^A-Za-z0-9]", "-");
         String uniqueId = UUID.randomUUID().toString();
         return baseTitle + "-" + uniqueId;
     }
+
+
 
 
 }

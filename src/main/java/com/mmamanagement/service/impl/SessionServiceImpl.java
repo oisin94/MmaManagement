@@ -47,5 +47,31 @@ public class SessionServiceImpl implements SessionService {
         return SessionMapper.mapToSessionDto(session);
     }
 
+    @Override
+    public void deleteSession(Long sessionId) {
+        sessionRepository.deleteById(sessionId);
+    }
+
+    @Override
+    public void updateSession(SessionDto sessionDto) {
+        Session session = SessionMapper.mapToSession(sessionDto);
+        sessionRepository.save(session);
+    }
+
+    @Override
+    public SessionDto findSessionById(Long sessionId) {
+        Session session = sessionRepository.findById(sessionId).get();
+        return SessionMapper.mapToSessionDto(session);
+    }
+
+    @Override
+    public List<SessionDto> searchSessions(String query) {
+        List<Session> sessions = sessionRepository.searchSessions(query);
+        return sessions.stream()
+                .map(SessionMapper :: mapToSessionDto)
+                .collect(Collectors.toList());
+    }
+
+
 
 }

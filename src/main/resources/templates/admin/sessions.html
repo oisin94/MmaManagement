@@ -58,6 +58,7 @@
             <td th:text="${session1.trainer.getName()}">session trainer</td>
             <td th:text="${#temporals.format(session1.sessionTime, 'dd MMM yyyy @ HH:mm')}">10 JUL 2022 15:00:00</td>
             <td>
+                <!-- {sessionId} is a path variable - filled in with the id of the session1.id -->
                 <a th:href="@{/admin/sessions/{sessionId}/edit(sessionId=${session1.id})}" class="btn btn-primary">Edit</a>
                 <a th:href="@{/admin/sessions/{sessionId}/delete(sessionId=${session1.id})}" class="btn btn-danger">Delete</a>
                 <a th:href="@{/admin/sessions/{sessionUrl}/view(sessionUrl=${session1.url})}" class="btn btn-info">View</a>

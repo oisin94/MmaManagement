@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+
+<div th:replace="admin/header :: header"></div>
+<body>
+<div th:replace="admin/header :: navbar"></div>
+
+<br /><br />
+<div class="container">
+    <div class="row col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center"> Edit Session</h2>
+            </div>
+            <div class="card-body">
+                <form role="form" method="post" th:action="@{/admin/sessions/{sessionId}(sessionId=${session1.id})}" th:object="${session1}">
+                    <input type="hidden" th:field="*{url}">
+
+                    <!-- Session Name -->
+                    <div class="mb-3">
+                        <label class="form-label">Session Name</label>
+                        <input type="text" class="form-control" id="sessionName" placeholder="Enter session name" name="sessionName" th:field="*{sessionName}" />
+                        <p th:if="${#fields.hasErrors('sessionName')}" class="text-danger" th:errors="*{sessionName}"></p>
+                    </div>
+
+                    <!-- Belt Ranking -->
+                    <div class="mb-3">
+                        <label class="form-label">Belt Rank</label>
+                        <select class="form-control" id="beltRank" name="beltRank" th:field="*{beltRank}">
+                            <option value="Any">Any</option>
+                            <option value="White">White</option>
+                            <option value="Blue">Blue</option>
+                            <option value="Purple">Purple</option>
+                            <option value="Brown">Brown</option>
+                            <option value="Black">Black</option>
+                        </select>
+                        <p th:if="${#fields.hasErrors('beltRank')}" class="text-danger" th:errors="*{beltRank}"></p>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" id="description" placeholder="Enter session description" rows="5" name="description" th:field="*{description}"></textarea>
+                        <p th:if="${#fields.hasErrors('description')}" class="text-danger" th:errors="*{description}"></p>
+                    </div>
+
+                    <!-- Session Time -->
+                    <div class="mb-3">
+                        <label class="form-label">Session Time</label>
+                        <input type="datetime-local" class="form-control" id="sessionTime" name="sessionTime" th:field="*{sessionTime}" />
+                        <p th:if="${#fields.hasErrors('sessionTime')}" class="text-danger" th:errors="*{sessionTime}"></p>
+                    </div>
+
+                    <!-- Trainer (Assuming a dropdown of trainers) -->
+                    <div class="mb-3">
+                        <label for="trainer">Trainer</label>
+                        <select class="form-control" id="trainer" name="trainer">
+                            <!-- Dynamically populate trainers -->
+                            <option th:each="trainer : ${trainers}" th:value="${trainer.id}" th:text="${trainer.name}"></option>
+                        </select>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary">Update Session</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br /><br /><br /><br /><br />
+<div th:replace="admin/footer :: footer"></div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#description' ) )
+        .then( editor => {
+            console.log( editor );
+        } )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+
+</body>
+</html>
