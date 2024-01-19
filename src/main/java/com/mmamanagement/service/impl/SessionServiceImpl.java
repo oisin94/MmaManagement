@@ -2,13 +2,17 @@ package com.mmamanagement.service.impl;
 
 import com.mmamanagement.dto.SessionDto;
 import com.mmamanagement.entity.Session;
+import com.mmamanagement.entity.User;
 import com.mmamanagement.mapper.SessionMapper;
 import com.mmamanagement.repository.SessionRepository;
+import com.mmamanagement.repository.UserRepository;
 import com.mmamanagement.service.SessionService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -16,8 +20,12 @@ public class SessionServiceImpl implements SessionService {
 
     private SessionRepository sessionRepository;
 
-    public SessionServiceImpl(SessionRepository sessionRepository) {
+    private UserRepository userRepository;
+
+    public SessionServiceImpl(SessionRepository sessionRepository,
+                              UserRepository userRepository) {
         this.sessionRepository = sessionRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -28,9 +36,16 @@ public class SessionServiceImpl implements SessionService {
     }
 
 
-    @Override
     public void createSession(SessionDto sessionDto) {
+        Set<User> users = sessionDto.getUserIds() != null
+                ? sessionDto.getUserIds().stream()
+                .map(userId -> userRepository.findById(userId)
+                        .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId)))
+                .collect(Collectors.toSet())
+                : new HashSet<>();
+
         Session session = SessionMapper.mapToSession(sessionDto);
+        session.setUsers(users);
         sessionRepository.save(session);
     }
 

@@ -1,15 +1,17 @@
 package com.mmamanagement.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Setter
 @Entity
+@Builder
 @Table(name = "user")
 public class User {
 
@@ -22,6 +24,10 @@ public class User {
     private String email;
 //    @Column(nullable = false)
     private String password;
+
+    private String beltRank;
+
+    private int sessionsToNextRank;
 
     @ManyToMany(mappedBy = "users")
     private Set<Session> sessions = new HashSet<>();

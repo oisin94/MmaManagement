@@ -1,5 +1,6 @@
 package com.mmamanagement.dto;
 
+import jdk.jshell.Snippet;
 import lombok.*;
 
 import java.io.Serializable;
@@ -10,6 +11,7 @@ import java.util.Set;
  */
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto {

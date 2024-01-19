@@ -26,6 +26,8 @@ public class Session {
 
     private String url;
 
+    private int maxCapacity;
+
     private String description;
 
     private LocalDateTime sessionTime;

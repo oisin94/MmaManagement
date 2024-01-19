@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div th:replace="user/header :: header"></div>
+<body>
+<div th:replace="user/header :: navbar"></div>
+<br />
+
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-4">
+
+
+      <!-- User Information Panel -->
+      <!-- Will add to it later -->
+      <div class="card">
+        <div class="card-header">
+          <h4>User Profile</h4>
+        </div>
+        <div class="card-body">
+          <p><strong>Name:</strong> <span th:text="${user1.name}">John Doe</span></p>
+          <p><strong>Email:</strong> <span th:text="${user1.email}">johndoe@example.com</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <!-- Sessions Panel -->
+      <div class="card">
+        <div class="card-header">
+          <h4>Enrolled Sessions</h4>
+        </div>
+        <div class="card-body">
+          <ul>
+            <li th:each="sessionId : ${user1.sessionIds}" th:text="${sessionId}"></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div th:replace="user/footer :: footer"></div>
+
+</body>
+</html>

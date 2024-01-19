@@ -1,7 +1,11 @@
 package com.mmamanagement.controller;
 
 import com.mmamanagement.dto.SessionDto;
+import com.mmamanagement.dto.UserDto;
+import com.mmamanagement.entity.Session;
+import com.mmamanagement.entity.User;
 import com.mmamanagement.service.SessionService;
+import com.mmamanagement.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +24,14 @@ public class UserController {
 
     private SessionService sessionService;
 
-    public UserController(SessionService sessionService) {
+    private UserService userService;
+
+
+
+    public UserController(SessionService sessionService,
+                            UserService userService) {
         this.sessionService = sessionService;
+        this.userService = userService;
     }
 
     @GetMapping("/user/sessions")
@@ -48,10 +58,19 @@ public class UserController {
 
     @PostMapping("/user/session/{sessionId}/book")
     public String bookSession(@PathVariable Long sessionId, Principal principal) {
-        // The Principal object can be used to get the currently logged-in user's details
-        // Implement the logic to book the session for the user
-        // Redirect to a confirmation page or back to the session list
+        String email = "oisin@hotmail.com";
+        userService.addUserToSession(email, sessionId);
         return "redirect:/user/sessions";
     }
+
+    @GetMapping("/user/profile")
+    public String userProfile(Principal principal, Model model) {
+//        String email = principal.getName();
+        String email = "oisin@hotmail.com";
+        UserDto userDto = userService.getUserByEmail(email);
+        model.addAttribute("user1", userDto);
+        return "user/user_profile"; // Name of the Thymeleaf template for the profile
+    }
+
 
 }

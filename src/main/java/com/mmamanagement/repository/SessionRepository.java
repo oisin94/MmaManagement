@@ -27,3 +27,5 @@ public interface SessionRepository extends JpaRepository<Session, Long> {
     List<Session> findSessionsBetween(@Param("startOfWeek") LocalDateTime startOfWeek,
                                       @Param("endOfWeek") LocalDateTime endOfWeek);}
 
+
+

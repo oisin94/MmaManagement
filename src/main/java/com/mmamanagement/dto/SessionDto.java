@@ -20,6 +20,7 @@ public class SessionDto {
     Long id;
     String sessionName;
     String url;
+    int maxCapacity;
     String description;
     LocalDateTime sessionTime;
     Trainer trainer;
