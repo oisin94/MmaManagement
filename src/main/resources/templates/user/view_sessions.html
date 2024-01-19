@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <!-- Include necessary head elements -->
+</head>
+<body>
+<div th:replace="user/header :: header"></div>
+<div th:replace="user/header :: navbar"></div>
+<br />
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-9">
+      <!-- Weekly navigation controls -->
+      <div>
+        <h2>Sessions for the week of <span th:text="${#temporals.format(startOfWeek, 'dd MMM yyyy')}"></span> to <span th:text="${#temporals.format(endOfWeek, 'dd MMM yyyy')}"></span></h2>
+        <a th:href="@{'/'(startDate=${startOfWeek.minusWeeks(1)})}" class="btn btn-secondary">Previous Week</a>
+        <a th:href="@{'/'(startDate=${startOfWeek.plusWeeks(1)})}" class="btn btn-secondary">Next Week</a>
+      </div>
+      <!-- Sessions display -->
+      <div th:each="session1 : ${sessionResponse}">
+        <div class="card">
+          <div class="card-header">
+            <h3>
+              <a th:href="@{/user/session/{sessionUrl}(sessionUrl=${session1.url})}" th:text="${session1.sessionName}"></a>
+            </h3>
+          </div>
+          <div class="card-body">
+            <span th:utext="${session1.description}"> </span>
+            <a th:href="@{/user/session/{sessionUrl}(sessionUrl=${session1.url})}">Read more</a>
+          </div>
+        </div>
+        <br />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div th:replace="user/footer :: footer"></div>
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div th:replace="user/header :: header"></div>
+<body>
+<div th:replace="user/header :: navbar"></div>
+
+<div class="container">
+    <h1>Session Details</h1>
+    <div class="session-details">
+        <h2 th:text="${session1.sessionName}">Session Name</h2>
+        <p><strong>Belt Rank:</strong> <span th:text="${session1.beltRank}">Belt Rank</span></p>
+        <p><strong>Description:</strong> <span th:utext="${session1.description}">Description</span></p>
+        <p><strong>Trainer:</strong> <span th:text="${session1.trainer.getName()}">Trainer Name</span></p>
+        <p><strong>Session Time:</strong> <span th:text="${#temporals.format(session1.sessionTime, 'dd MMM yyyy @ HH:mm')}">Session Time</span></p>
+
+        <div class="actions">
+<!--            Back to Session List-->
+            <a th:href="@{/user/sessions}" class="btn btn-primary">Back to List</a>
+            <br>
+            <br>
+            <!-- Book Session Button -->
+            <form th:action="@{/user/session/{sessionId}/book(sessionId=${session1.id})}" method="post">
+                <button type="submit" class="btn btn-success">Book Session</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+<div th:replace="user/footer :: footer"></div>
+</body>
+</html>

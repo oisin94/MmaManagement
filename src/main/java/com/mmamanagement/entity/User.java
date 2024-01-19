@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Getter
 @Setter
 @Entity
@@ -19,4 +22,8 @@ public class User {
     private String email;
 //    @Column(nullable = false)
     private String password;
+
+    @ManyToMany(mappedBy = "users")
+    private Set<Session> sessions = new HashSet<>();
+
 }

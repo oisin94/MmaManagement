@@ -37,8 +37,13 @@ public class Session {
     @JoinColumn(name = "trainer_id", nullable = false)
     private Trainer trainer;
 
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "session")
-    private Set<Booking> bookings = new HashSet<>();
+    @ManyToMany
+    @JoinTable(
+            name = "user_session",
+            joinColumns = @JoinColumn(name = "session_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<User> users = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "session")
     private Set<Attendee> attendees = new HashSet<>();

@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 /**
  * DTO for {@link com.mmamanagement.entity.Session}
@@ -23,4 +24,5 @@ public class SessionDto {
     LocalDateTime sessionTime;
     Trainer trainer;
     String beltRank;
+    Set<Long> userIds;
 }

@@ -3,6 +3,7 @@ package com.mmamanagement.dto;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * DTO for {@link com.mmamanagement.entity.User}
@@ -15,5 +16,6 @@ public class UserDto {
     Long id;
     String name;
     String email;
-    String password;
+    Set<Long> sessionIds; // Set of Session IDs the user is enrolled in
+
 }
