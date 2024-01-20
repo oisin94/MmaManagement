@@ -19,6 +19,8 @@
 
     <div class="actions">
         <a th:href="@{/admin/sessions}" class="btn btn-primary">Back to List</a>
+        <br>
+        <a th:href="@{'/admin/attendance/newAttendance'(sessionId=${session1.id}, sessionDate=${session1.sessionTime})}" class="btn btn-secondary">Take Attendance</a>
 
     </div>
 </div>

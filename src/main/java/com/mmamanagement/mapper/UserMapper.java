@@ -15,6 +15,8 @@ public class UserMapper {
                 .id(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
+                .beltRank(user.getBeltRank())
+                .sessionsAttended(user.getSessionsAttended())
                 .sessionIds(user.getSessions().stream()
                         .map((session) -> session.getId())
                         .collect(Collectors.toSet()))
@@ -26,6 +28,8 @@ public class UserMapper {
                 .id(userDto.getId())
                 .name(userDto.getName())
                 .email(userDto.getEmail())
+                .beltRank(userDto.getBeltRank())
+                .sessionsAttended(userDto.getSessionsAttended())
                 .sessions(sessions)
                 .build();
     }

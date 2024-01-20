@@ -27,9 +27,14 @@ public class User {
 
     private String beltRank;
 
+    private int sessionsAttended;
+
     private int sessionsToNextRank;
 
     @ManyToMany(mappedBy = "users")
     private Set<Session> sessions = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user")
+    private Set<Attendance> attendances = new HashSet<>();
 
 }

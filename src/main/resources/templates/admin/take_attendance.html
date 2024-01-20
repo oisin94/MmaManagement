@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div th:replace="~{admin/header :: header}"></div>
+<body>
+<div th:replace="~{admin/header :: navbar}"></div>
+<br />
+<h1>Create Attendance</h1>
+<form th:action="@{/admin/attendance}" th:object="${attendance}" method="post">
+
+    <input type="hidden" id="sessionId" th:field="*{sessionId}">
+    <input type="hidden" id="attendanceDate" th:field="*{attendanceDate}">
+
+
+    <div>
+        <label for="userId">User ID:</label>
+        <input type="number" id="userId" th:field="*{userId}" required>
+    </div>
+
+    <button type="submit">Submit</button>
+</form>
+
+<div th:replace="~{admin/footer :: footer}"></div>
+</body>
+</html>

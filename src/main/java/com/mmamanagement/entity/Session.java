@@ -48,7 +48,7 @@ public class Session {
     private Set<User> users = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "session")
-    private Set<Attendee> attendees = new HashSet<>();
+    private Set<Attendance> attendances = new HashSet<>();
 
 
 }

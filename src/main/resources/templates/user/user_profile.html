@@ -6,14 +6,10 @@
 <body>
 <div th:replace="user/header :: navbar"></div>
 <br />
-
 <div class="container mt-4">
   <div class="row">
+    <!-- User Information Panel -->
     <div class="col-md-4">
-
-
-      <!-- User Information Panel -->
-      <!-- Will add to it later -->
       <div class="card">
         <div class="card-header">
           <h4>User Profile</h4>
@@ -21,20 +17,30 @@
         <div class="card-body">
           <p><strong>Name:</strong> <span th:text="${user1.name}">John Doe</span></p>
           <p><strong>Email:</strong> <span th:text="${user1.email}">johndoe@example.com</span></p>
+          <p><strong>Belt Rank:</strong> <span th:text="${user1.beltRank}">White</span></p>
+          <p><strong>Sessions Attended:</strong> <span th:text="${user1.sessionsAttended}">0</span></p>
+          <p><strong>Sessions to Next Rank:</strong> <span th:text="${user1.sessionsToNextRank}">10</span></p>
+
+          <img th:src="@{'/images/belts/' + ${user1.beltRank} + '.jpeg'}" alt="Belt Image" />
+
+
         </div>
       </div>
     </div>
 
+    <!-- Enrolled Sessions Panel -->
     <div class="col-md-8">
-      <!-- Sessions Panel -->
       <div class="card">
         <div class="card-header">
           <h4>Enrolled Sessions</h4>
         </div>
         <div class="card-body">
-          <ul>
-            <li th:each="sessionId : ${user1.sessionIds}" th:text="${sessionId}"></li>
-          </ul>
+<!--          <ul>-->
+<!--            <li th:each="session1 : ${user1.sessions}" th:text="${session.sessionName}"></li>-->
+<!--          </ul>-->
+<!--          <ul>-->
+<!--            <li th:each="sessionId : ${user1.sessionIds}" th:text="${sessionId}"></li>-->
+<!--          </ul>-->
         </div>
       </div>
     </div>
@@ -42,6 +48,5 @@
 </div>
 
 <div th:replace="user/footer :: footer"></div>
-
 </body>
 </html>

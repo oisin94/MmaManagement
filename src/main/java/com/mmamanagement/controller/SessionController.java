@@ -54,7 +54,7 @@ public class SessionController {
 
 
     @GetMapping("admin/session/newSession")
-    public String newPostForm(Model model){
+    public String newSessionForm(Model model){
         SessionDto sessionDto = new SessionDto();
         List<Trainer> trainers = trainerService.findAllTrainers();
         model.addAttribute("session1", sessionDto);
@@ -64,7 +64,7 @@ public class SessionController {
 
     // handler method to handle view post request
     @GetMapping("/admin/sessions/{sessionUrl}/view")
-    public String viewPost(@PathVariable("sessionUrl") String sessionUrl,
+    public String viewSession(@PathVariable("sessionUrl") String sessionUrl,
                            Model model){
         SessionDto sessionDto = sessionService.findSessionByUrl(sessionUrl);
         model.addAttribute("session1", sessionDto);
@@ -73,7 +73,7 @@ public class SessionController {
     }
 
     @GetMapping("/admin/sessions/{sessionId}/delete")
-public String deletePost(@PathVariable("sessionId") Long sessionId){
+public String deleteSession(@PathVariable("sessionId") Long sessionId){
         sessionService.deleteSession(sessionId);
         return "redirect:/admin/sessions";
     }
