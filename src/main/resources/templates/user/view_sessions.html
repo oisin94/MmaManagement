@@ -12,10 +12,12 @@
     <div class="col-md-9">
       <!-- Weekly navigation controls -->
       <div>
-        <h2>Sessions for the week of <span th:text="${#temporals.format(startOfWeek, 'dd MMM yyyy')}"></span> to <span th:text="${#temporals.format(endOfWeek, 'dd MMM yyyy')}"></span></h2>
-        <a th:href="@{'/'(startDate=${startOfWeek.minusWeeks(1)})}" class="btn btn-secondary">Previous Week</a>
-        <a th:href="@{'/'(startDate=${startOfWeek.plusWeeks(1)})}" class="btn btn-secondary">Next Week</a>
+<!--        <h2>Sessions for the week of <span style="color: blue; text-decoration: underline" th:text="${#temporals.format(startOfWeek, 'dd MMM yyyy')}"></span> to-->
+<!--          <span style="color: blue; text-decoration: underline" th:text="${#temporals.format(endOfWeek, 'dd MMM yyyy')}"></span></h2>-->
+<!--        <a th:href="@{'/'(startDate=${startOfWeek.minusWeeks(1)})}" class="btn btn-secondary">Previous Week</a>-->
+<!--        <a th:href="@{'/'(startDate=${startOfWeek.plusWeeks(1)})}" class="btn btn-secondary">Next Week</a>-->
       </div>
+      <br>
       <!-- Sessions display -->
       <div th:each="session1 : ${sessionResponse}">
         <div class="card">

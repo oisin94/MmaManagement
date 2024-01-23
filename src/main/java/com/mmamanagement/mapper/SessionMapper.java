@@ -22,10 +22,6 @@ public class SessionMapper {
                 .userIds(session.getUsers().stream()
                         .map((user) -> user.getId())
                         .collect(Collectors.toSet()))
-                // to stream through the comments and map each comment to a commentDto
-//                .comments(session.getComments().stream()
-//                        .map((comment) -> CommentMapper.mapToCommentDto(comment))
-//                        .collect(Collectors.toSet()))
                 .build();
     }
 

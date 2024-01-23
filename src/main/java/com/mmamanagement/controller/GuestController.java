@@ -29,6 +29,9 @@ public class GuestController {
 
         List<SessionDto> sessionsThisWeek = sessionService.findSessionsBetween(startOfWeek, endOfWeek);
 
+        System.out.println("Start of Week: " + startOfWeek);
+        System.out.println("End of Week: " + endOfWeek);
+
         model.addAttribute("sessionResponse", sessionsThisWeek);
         model.addAttribute("startOfWeek", startOfWeek);
         model.addAttribute("endOfWeek", endOfWeek);

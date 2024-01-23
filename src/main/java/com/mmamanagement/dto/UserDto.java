@@ -18,9 +18,10 @@ public class UserDto {
     Long id;
     String name;
     String email;
-    private String beltRank;
-    private int sessionsToNextRank;
+    String beltRank;
+    int sessionsToNextRank;
     int sessionsAttended;
     Set<Long> sessionIds; // Set of Session IDs the user is enrolled in
+
 
 }

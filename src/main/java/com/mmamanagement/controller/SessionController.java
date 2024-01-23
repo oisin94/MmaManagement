@@ -2,7 +2,6 @@ package com.mmamanagement.controller;
 
 
 import com.mmamanagement.dto.SessionDto;
-import com.mmamanagement.entity.Session;
 import com.mmamanagement.entity.Trainer;
 import com.mmamanagement.service.SessionService;
 import com.mmamanagement.service.TrainerService;
@@ -13,7 +12,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
@@ -36,15 +34,15 @@ public class SessionController {
 
 
 
-    // create handler method, GET request and return model and view
-    // http://localhost:8080/admin/sessions
+//     create handler method, GET request and return model and view
+//     http://localhost:8080/admin/sessions
     @GetMapping("/admin/sessions")
     public String sessions(Model model, @RequestParam(required = false) LocalDateTime startDate) {
         LocalDateTime startOfWeek = (startDate != null) ? startDate : LocalDateTime.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
         LocalDateTime endOfWeek = startOfWeek.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
 
-
         List<SessionDto> sessionsThisWeek = sessionService.findSessionsBetween(startOfWeek, endOfWeek);
+
 
         model.addAttribute("sessions1", sessionsThisWeek);
         model.addAttribute("startOfWeek", startOfWeek);
@@ -52,8 +50,29 @@ public class SessionController {
         return "admin/sessions";
     }
 
+//    @GetMapping("/admin/sessions")
+//    public String sessions(Model model, @RequestParam(required = false) LocalDateTime startDate) {
+//    List<SessionDto> sessionsThisWeek = sessionService.findAllSessions();
+//
+//        model.addAttribute("sessions1", sessionsThisWeek);
+//        return "admin/sessions";
+//    }
 
-    @GetMapping("admin/session/newSession")
+
+
+    // Get request for search sessions page
+    // http://localhost:8080/admin/sessions/searchPage
+    @GetMapping("/admin/sessions/searchPage")
+    public String searchPage(Model model) {
+        List<SessionDto> sessions = sessionService.findAllSessions();
+        model.addAttribute("sessions1", sessions);
+        return "admin/search_page";
+    }
+
+
+    // handler method to handle create session request
+    // http://localhost:8080/admin/sessions/newSession
+    @GetMapping("admin/sessions/newSession")
     public String newSessionForm(Model model){
         SessionDto sessionDto = new SessionDto();
         List<Trainer> trainers = trainerService.findAllTrainers();
@@ -62,7 +81,7 @@ public class SessionController {
         return "admin/create_session";
     }
 
-    // handler method to handle view post request
+    // handler method to handle view session request
     @GetMapping("/admin/sessions/{sessionUrl}/view")
     public String viewSession(@PathVariable("sessionUrl") String sessionUrl,
                            Model model){
@@ -72,13 +91,15 @@ public class SessionController {
 
     }
 
+    // handler method to handle delete session request
+    // http://localhost:8080/admin/posts/1/delete
     @GetMapping("/admin/sessions/{sessionId}/delete")
 public String deleteSession(@PathVariable("sessionId") Long sessionId){
         sessionService.deleteSession(sessionId);
         return "redirect:/admin/sessions";
     }
 
-    // handler method to handle edit post request
+    // handler method to handle edit sessions request
     // http://localhost:8080/admin/posts/1/edit
     @GetMapping("/admin/sessions/{sessionId}/edit")
     public String editSessionForm(@PathVariable("sessionId") Long sessionId,
@@ -90,7 +111,7 @@ public String deleteSession(@PathVariable("sessionId") Long sessionId){
         return "admin/edit_session";
     }
 
-    // handler method to handle edit post form submit request
+    // handler method to handle edit sessions form submit request
     // http://localhost:8080/admin/posts/1
     @PostMapping("/admin/sessions/{sessionId}")
     public String updateSession(@PathVariable("sessionId") Long sessionId,
@@ -122,13 +143,16 @@ public String deleteSession(@PathVariable("sessionId") Long sessionId){
         return "redirect:/admin/sessions";
     }
 
+    // handler method to handle search sessions request
+    // http://localhost:8080/admin/sessions/search?query=java
     @GetMapping("/admin/sessions/search")
     public String searchSessions(@RequestParam(value ="query") String query,
                                  Model model){
         List<SessionDto> sessions = sessionService.searchSessions(query);
         model.addAttribute("sessions1", sessions);
-        return "admin/sessions";
+        return "admin/search_page";
     }
+
 
 
     private static String getUrl(String sessionName){

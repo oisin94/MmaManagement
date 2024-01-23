@@ -34,16 +34,23 @@ public class UserController {
         this.userService = userService;
     }
 
+//    @GetMapping("/user/sessions")
+//    public String viewUserSchedule(Model model, @RequestParam(required = false) LocalDateTime startDate) {
+//        LocalDateTime startOfWeek = (startDate != null) ? startDate : LocalDateTime.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+//        LocalDateTime endOfWeek = startOfWeek.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
+//
+//        List<SessionDto> sessionsThisWeek = sessionService.findSessionsBetween(startOfWeek, endOfWeek);
+//
+//        model.addAttribute("sessionResponse", sessionsThisWeek);
+//        model.addAttribute("startOfWeek", startOfWeek);
+//        model.addAttribute("endOfWeek", endOfWeek);
+//        return "user/view_sessions";
+//    }
+
     @GetMapping("/user/sessions")
-    public String viewUserSchedule(Model model, @RequestParam(required = false) LocalDateTime startDate) {
-        LocalDateTime startOfWeek = (startDate != null) ? startDate : LocalDateTime.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
-        LocalDateTime endOfWeek = startOfWeek.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
-
-        List<SessionDto> sessionsThisWeek = sessionService.findSessionsBetween(startOfWeek, endOfWeek);
-
-        model.addAttribute("sessionResponse", sessionsThisWeek);
-        model.addAttribute("startOfWeek", startOfWeek);
-        model.addAttribute("endOfWeek", endOfWeek);
+    public String sessions(Model model) {
+        List<SessionDto> sessions = sessionService.findAllSessions();
+        model.addAttribute("sessionResponse", sessions);
         return "user/view_sessions";
     }
 
@@ -65,8 +72,7 @@ public class UserController {
 
     @GetMapping("/user/profile")
     public String userProfile(Principal principal, Model model) {
-//        String email = principal.getName();
-        String email = "oisin@hotmail.com";
+        String email = principal.getName();
         UserDto userDto = userService.getUserByEmail(email);
         model.addAttribute("user1", userDto);
         return "user/user_profile"; // Name of the Thymeleaf template for the profile

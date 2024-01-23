@@ -15,6 +15,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Service
 public class SessionServiceImpl implements SessionService {
 
@@ -49,12 +52,19 @@ public class SessionServiceImpl implements SessionService {
         sessionRepository.save(session);
     }
 
-    @Override
+
+
+    // Inside your class
+    private static final Logger logger = LoggerFactory.getLogger(SessionServiceImpl.class);
+
     public List<SessionDto> findSessionsBetween(LocalDateTime startOfWeek, LocalDateTime endOfWeek) {
+        logger.debug("Fetching sessions between {} and {}", startOfWeek, endOfWeek);
         List<Session> sessions = sessionRepository.findSessionsBetween(startOfWeek, endOfWeek);
-        return sessions.stream().map(SessionMapper :: mapToSessionDto)
+        logger.debug("Found {} sessions", sessions.size());
+        return sessions.stream().map(SessionMapper::mapToSessionDto)
                 .collect(Collectors.toList());
     }
+
 
     @Override
     public SessionDto findSessionByUrl(String sessionUrl) {
